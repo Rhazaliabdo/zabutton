@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bouton Fuyant 🏃‍♂️💨</title>
+  <style>
+    *{box-sizing:border-box;font-family:Inter, system-ui, sans-serif}
+    body{
+      height:100vh;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle at top, #1e1b4b, #020617);
+      color:white;
+      overflow:hidden;
+    }
+
+    .login-box{
+      display:flex;
+      flex-direction:column;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:12px;
+      padding:24px 30px;
+      width:300px;
+      backdrop-filter:blur(10px);
+    }
+
+    h1{margin:0 0 10px;font-size:20px;text-align:center}
+    label{font-size:13px;margin:8px 0 4px;color:#cbd5e1}
+    input{
+      padding:10px 12px;
+      border-radius:8px;
+      border:none;
+      outline:none;
+      font-size:14px;
+      margin-bottom:10px;
+    }
+
+    input:focus{box-shadow:0 0 0 2px #6366f1;}
+
+    button{
+      position:absolute;
+      padding:12px 20px;
+      border:none;
+      border-radius:10px;
+      background:linear-gradient(90deg,#6366f1,#4f46e5);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      transition:transform 0.2s;
+      box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    button:active{transform:scale(0.95);}
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h1>Connexion</h1>
+    <label for="username">Identifiant</label>
+    <input type="text" id="username" placeholder="Ton identifiant">
+    <label for="password">Mot de passe</label>
+    <input type="password" id="password" placeholder="Ton mot de passe">
+  </div>
+
+  <button id="loginBtn">Se connecter</button>
+
+  <script>
+    const btn = document.getElementById('loginBtn');
+    const user = document.getElementById('username');
+    const pass = document.getElementById('password');
+
+    // placer le bouton au centre au départ
+    let btnX = window.innerWidth / 2 - 60;
+    let btnY = window.innerHeight / 2 + 120;
+    btn.style.left = `${btnX}px`;
+    btn.style.top = `${btnY}px`;
+
+    function bothEmpty(){
+      return user.value.trim() === '' && pass.value.trim() === '';
+    }
+
+    function randomRun(){
+      if (!bothEmpty()) return; // Si un champ est rempli, le bouton reste tranquille
+      const maxX = window.innerWidth - btn.offsetWidth;
+      const maxY = window.innerHeight - btn.offsetHeight;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+
+    btn.addEventListener('mouseenter', randomRun);
+    btn.addEventListener('mousemove', randomRun);
+    window.addEventListener('resize', randomRun);
+
+    btn.addEventListener('click', () => {
+      if (bothEmpty()) {
+        randomRun();
+        btn.textContent = "Catch me if you can! 😂";
+        return;
+      }
+      btn.textContent = "Connexion...";
+      setTimeout(() => alert("Connexion réussie (fake) 🎉"), 800);
+    });
+
+    // Quand les champs changent, si remplis => bouton reste calme
+    [user, pass].forEach(el => el.addEventListener('input', () => {
+      if (bothEmpty()) {
+        btn.textContent = "Se connecter";
+      } else {
+        btn.textContent = "Se connecter";
+      }
+    }));
+  </script>
+</body>
+</html>
